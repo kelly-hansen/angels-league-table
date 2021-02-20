@@ -104,7 +104,9 @@ function AveragesTable() {
       displayName: 'K%',
       dataKey: 'so_per'
     }
-  ]
+  ];
+
+  const positions = ['overall', 'AL', 'NL', 'C', '1B', '2B', '3B', 'SS', 'LF', 'CF', 'RF', 'DH'];
 
   return (
     <div className="table-container">
@@ -118,7 +120,7 @@ function AveragesTable() {
             </tr>
           </thead>
           <tbody>
-            <tr></tr>
+
           </tbody>
         </table>
       </div>
