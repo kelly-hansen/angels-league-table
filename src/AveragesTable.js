@@ -1,6 +1,7 @@
 import LeagueAvg from './LeagueAvg.json';
 
 function AveragesTable(props) {
+
   const tableFields = [
     {
       displayName: 'Pos',
@@ -8,15 +9,18 @@ function AveragesTable(props) {
     },
     {
       displayName: 'Age',
-      dataKey: 'age'
+      dataKey: 'age',
+      displayNum: num => num.toFixed(1)
     },
     {
       displayName: 'Pros Age',
-      dataKey: 'prospect_age'
+      dataKey: 'prospect_age',
+      displayNum: num => num.toFixed(1)
     },
     {
       displayName: 'AVG',
-      dataKey: 'avg'
+      dataKey: 'avg',
+      displayNum: num => num.toFixed(3).toString(10).substring(1)
     },
     {
       displayName: 'OBP',
@@ -127,13 +131,14 @@ function AveragesTable(props) {
                 <tr key={pos}>
                   <td className="pos">{pos}</td>
                   {tableFields.map((field, ind) => {
-                    if (ind !== 0) {
+                    if (ind !== 0 && ind < 4) {
                       for (let i = 0; i < LeagueAvg.length; i++) {
                         if (LeagueAvg[i].league === props.league && LeagueAvg[i].split === pos) {
-                          return <td key={pos + field.dataKey}>{LeagueAvg[i][field.dataKey]}</td>;
+                          return <td key={pos + field.dataKey}>{field.displayNum(LeagueAvg[i][field.dataKey])}</td>;
                         }
                       }
                     }
+                    return;
                   })}
                 </tr>
               );
