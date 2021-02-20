@@ -1,6 +1,11 @@
+import LeagueAvg from './LeagueAvg.json';
+
 function App() {
   return (
-    <div>Hello World!</div>
+    <div>
+      <p>Hello World!</p>
+      {console.log(LeagueAvg)}
+    </div>
   );
 }
 
