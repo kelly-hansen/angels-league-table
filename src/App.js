@@ -18,7 +18,7 @@ function App() {
         <h3 onClick={handleChangeLeague} className={`league-title${league === 'MLB' ? ' selected' : ''}`}>MLB</h3>
         <h3 onClick={handleChangeLeague} className={`league-title${league === 'AAA' ? ' selected' : ''}`}>AAA</h3>
       </nav>
-      <AveragesTable />
+      <AveragesTable league={league} />
       {console.log(LeagueAvg)}
     </div>
   );

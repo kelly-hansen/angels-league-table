@@ -1,4 +1,6 @@
-function AveragesTable() {
+import LeagueAvg from './LeagueAvg.json';
+
+function AveragesTable(props) {
   const tableFields = [
     {
       displayName: 'Pos',
@@ -120,7 +122,22 @@ function AveragesTable() {
             </tr>
           </thead>
           <tbody>
-
+            {positions.map(pos => {
+              return (
+                <tr key={pos}>
+                  <td className="pos">{pos}</td>
+                  {tableFields.map((field, ind) => {
+                    if (ind !== 0) {
+                      for (let i = 0; i < LeagueAvg.length; i++) {
+                        if (LeagueAvg[i].league === props.league && LeagueAvg[i].split === pos) {
+                          return <td key={pos + field.dataKey}>{LeagueAvg[i][field.dataKey]}</td>;
+                        }
+                      }
+                    }
+                  })}
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>
