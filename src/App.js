@@ -3,7 +3,9 @@ import LeagueAvg from './LeagueAvg.json';
 function App() {
   return (
     <div>
-      <p>Hello World!</p>
+      <header>
+        <h2>LEAGUE AVERAGES</h2>
+      </header>
       {console.log(LeagueAvg)}
     </div>
   );

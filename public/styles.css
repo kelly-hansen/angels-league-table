@@ -1,6 +1,18 @@
 body {
   margin: 0;
-  box-sizing: border-box;
-  background-color: #BA0021;
+  box-sizing: border-box;;
   font-family: 'Roboto', Arial, sans-serif;
+}
+
+header {
+  background-color: #BA0021;
+  color: white;
+  height: 4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+h2 {
+  margin: 0;
 }
