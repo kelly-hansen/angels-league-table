@@ -18,14 +18,18 @@ h2, p {
 }
 
 nav {
-  margin-top: 3rem;
+  margin: 3rem 0;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
+table {
+  max-width: 1000px;
+}
+
 .league-title {
-  width: 10rem;
+  width: 8rem;
   height: 3rem;
   display: flex;
   align-items: center;
@@ -35,6 +39,11 @@ nav {
 
 .league-title.selected {
   border-bottom: 3px solid #BA0021;
+}
+
+.table-cont {
+  display: flex;
+  justify-content: center;
 }
 
 @media (hover: hover) {
