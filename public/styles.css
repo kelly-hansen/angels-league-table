@@ -25,7 +25,19 @@ nav {
 }
 
 table {
-  max-width: 1000px;
+  font-size: .85rem;
+  border: 3px solid darkgray;
+}
+
+thead {
+  background-color: #872734;
+  color: white;
+}
+
+th {
+  min-width: 2.5rem;
+  width: 2.5rem;
+  padding: .2rem;
 }
 
 .league-title {
@@ -41,9 +53,13 @@ table {
   border-bottom: 3px solid #BA0021;
 }
 
-.table-cont {
+.table-container {
   display: flex;
   justify-content: center;
+}
+
+.table-wrapper {
+  overflow: auto;
 }
 
 @media (hover: hover) {
