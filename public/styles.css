@@ -71,6 +71,11 @@ tbody > tr:nth-child(odd) {
   overflow: auto;
 }
 
+.selected-column {
+  background-color: #885259;
+  color: white;
+}
+
 @media (hover: hover) {
   .league-title:hover {
     cursor: pointer;
