@@ -72,11 +72,16 @@ tbody > tr:nth-child(odd) {
 }
 
 .selected-column {
-  background-color: #885259;
+  background-color: #976d73;
   color: white;
 }
 
 @media (hover: hover) {
+  th:hover {
+    cursor: pointer;
+    background-color: #BA0021;
+  }
+
   .league-title:hover {
     cursor: pointer;
     color: darkgray;
