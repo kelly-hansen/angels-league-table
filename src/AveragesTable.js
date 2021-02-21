@@ -139,6 +139,10 @@ function AveragesTable(props) {
 
   const positions = ['Overall', props.league === 'MLB' ? 'AL' : 'INT', props.league === 'MLB' ? 'NL' : 'PCL', 'C', '1B', '2B', '3B', 'SS', 'LF', 'CF', 'RF', 'DH'];
 
+  function handleThClick(e) {
+    setSortBy(e.target.getAttribute('data-key'));
+  }
+
   return (
     <div className="table-container">
       <div className="table-wrapper">
@@ -146,7 +150,7 @@ function AveragesTable(props) {
           <thead>
             <tr>
               {tableFields.map(field => {
-                return <th key={field.dataKey}>{field.displayName}</th>
+                return <th key={field.dataKey} data-key={field.dataKey} onClick={handleThClick}>{field.displayName}</th>
               })}
             </tr>
           </thead>

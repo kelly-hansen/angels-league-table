@@ -12,7 +12,7 @@ function App() {
   return (
     <div>
       <header>
-        <h2>DEB IS HOT</h2>
+        <h2>LEAGUE AVERAGES</h2>
       </header>
       <nav>
         <h3 onClick={handleChangeLeague} className={`league-title${league === 'MLB' ? ' selected' : ''}`}>MLB</h3>
