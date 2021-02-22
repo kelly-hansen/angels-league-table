@@ -193,8 +193,14 @@ function AveragesTable(props) {
                 return (
                 <th key={field.dataKey} data-key={field.dataKey} onClick={handleThClick}>
                   {field.displayName}
-                    <div className="ascending" data-key={field.dataKey}>&#9650;</div>
-                    <div className="descending hidden" data-key={field.dataKey}>&#9660;</div>
+                  {field.dataKey !== 'split' && field.dataKey === sortBy ?
+                    (ascending ?
+                      <div className="asc-desc-arrow" data-key={field.dataKey}>&#9650;</div>
+                    :
+                      <p className="asc-desc-arrow" data-key={field.dataKey}>&#9660;</p>
+                    ) :
+                    false
+                  }
                 </th>
                 );
               })}
