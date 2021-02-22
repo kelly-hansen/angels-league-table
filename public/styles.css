@@ -45,10 +45,6 @@ td {
   text-align: center;
 }
 
-tbody > tr:nth-child(odd) {
-  background-color: rgb(233, 233, 233);
-}
-
 .league-title {
   width: 8rem;
   height: 3rem;
@@ -74,6 +70,15 @@ tbody > tr:nth-child(odd) {
 .selected-column {
   background-color: #976d73;
   color: white;
+}
+
+.league-row {
+  background-color: gray;
+  color: white;
+}
+
+.position-row:nth-child(odd) {
+  background-color: rgb(233, 233, 233);
 }
 
 @media (hover: hover) {

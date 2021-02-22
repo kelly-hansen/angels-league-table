@@ -139,15 +139,33 @@ function AveragesTable(props) {
 
   const positions = ['Overall', props.league === 'MLB' ? 'AL' : 'INT', props.league === 'MLB' ? 'NL' : 'PCL', 'C', '1B', '2B', '3B', 'SS', 'LF', 'CF', 'RF', 'DH'];
 
-  let displayPositions = positions.slice();
+  function sortTable(dataKey) {
+    let displayPositions = positions.slice();
+    if (dataKey === 'split') {
+      return displayPositions;
+    }
+    let excludeLeagues = displayPositions.slice(3);
+    excludeLeagues.sort((a, b) => {
+      let valueA;
+      let valueB;
+      for (let i = 0; i < LeagueAvgData.length; i++) {
+        if (LeagueAvgData[i].league === props.league) {
+          if (LeagueAvgData[i].split === a) {
+            valueA = LeagueAvgData[i][dataKey];
+          } else if (LeagueAvgData[i].split === b) {
+            valueB = LeagueAvgData[i][dataKey];
+          }
+        }
+      }
+      return valueB - valueA;
+    });
+    return displayPositions.slice(0, 3).concat(excludeLeagues);
+  }
 
   function handleThClick(e) {
     const dataKey = e.target.getAttribute('data-key');
     setSortBy(dataKey);
-    if (dataKey === 'split') {
-      displayPositions = positions.slice();
-      return;
-    }
+    sortTable(dataKey);
 
   }
 
@@ -163,9 +181,9 @@ function AveragesTable(props) {
             </tr>
           </thead>
           <tbody>
-            {displayPositions.map(pos => {
+            {sortTable(sortBy).map((pos, posInd) => {
               return (
-                <tr key={pos}>
+                <tr key={pos} className={posInd < 3 ? 'league-row' : 'position-row'}>
                   {tableFields.map((field, ind) => {
                     for (let i = 0; i < LeagueAvgData.length; i++) {
                       if (LeagueAvgData[i].league === props.league && LeagueAvgData[i].split === pos) {
