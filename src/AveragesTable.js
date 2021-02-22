@@ -1,11 +1,15 @@
 import LeagueAvgData from './LeagueAvg.json';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 function AveragesTable(props) {
   const [sortBy, setSortBy] = useState('split');
   const [ascending, setAscending] = useState(false);
   const positions = ['Overall', props.league === 'MLB' ? 'AL' : 'INT', props.league === 'MLB' ? 'NL' : 'PCL', 'C', '1B', '2B', '3B', 'SS', 'LF', 'CF', 'RF', 'DH'];
   const [displayPositions, setDisplayPositions] = useState(positions);
+
+  useEffect(() => {
+    setDisplayPositions(['Overall', props.league === 'MLB' ? 'AL' : 'INT', props.league === 'MLB' ? 'NL' : 'PCL', 'C', '1B', '2B', '3B', 'SS', 'LF', 'CF', 'RF', 'DH']);
+  }, [props.league]);
 
   const tableFields = [
     {
