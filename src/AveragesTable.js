@@ -1,8 +1,15 @@
-import LeagueAvg from './LeagueAvg.json';
-import { useState } from 'react';
+import LeagueAvgData from './LeagueAvg.json';
+import { useEffect, useState } from 'react';
 
 function AveragesTable(props) {
   const [sortBy, setSortBy] = useState('split');
+  const [ascending, setAscending] = useState(false);
+  const positions = ['Overall', props.league === 'MLB' ? 'AL' : 'INT', props.league === 'MLB' ? 'NL' : 'PCL', 'C', '1B', '2B', '3B', 'SS', 'LF', 'CF', 'RF', 'DH'];
+  const [displayPositions, setDisplayPositions] = useState(positions);
+
+  useEffect(() => {
+    setDisplayPositions(['Overall', props.league === 'MLB' ? 'AL' : 'INT', props.league === 'MLB' ? 'NL' : 'PCL', 'C', '1B', '2B', '3B', 'SS', 'LF', 'CF', 'RF', 'DH']);
+  }, [props.league]);
 
   const tableFields = [
     {
@@ -137,10 +144,43 @@ function AveragesTable(props) {
     }
   ];
 
-  const positions = ['Overall', props.league === 'MLB' ? 'AL' : 'INT', props.league === 'MLB' ? 'NL' : 'PCL', 'C', '1B', '2B', '3B', 'SS', 'LF', 'CF', 'RF', 'DH'];
+  function sortTable(dataKey) {
+    if (dataKey === 'split') {
+      setDisplayPositions(positions);
+      return;
+    }
+    let excludeLeagues = positions.slice(3);
+    excludeLeagues.sort((a, b) => {
+      let valueA;
+      let valueB;
+      for (let i = 0; i < LeagueAvgData.length; i++) {
+        if (LeagueAvgData[i].league === props.league) {
+          if (LeagueAvgData[i].split === a) {
+            valueA = LeagueAvgData[i][dataKey];
+          } else if (LeagueAvgData[i].split === b) {
+            valueB = LeagueAvgData[i][dataKey];
+          }
+        }
+      }
+      return valueB - valueA;
+    });
+    let reverse = ascending;
+    if (dataKey === sortBy) {
+      reverse = !reverse;
+      setAscending(prevAscending => {
+        return !prevAscending;
+      });
+    }
+    if (reverse) {
+      excludeLeagues.reverse();
+    }
+    setDisplayPositions(positions.slice(0, 3).concat(excludeLeagues));
+  }
 
   function handleThClick(e) {
-    setSortBy(e.target.getAttribute('data-key'));
+    const dataKey = e.target.getAttribute('data-key');
+    sortTable(dataKey);
+    setSortBy(dataKey);
   }
 
   return (
@@ -150,18 +190,30 @@ function AveragesTable(props) {
           <thead>
             <tr>
               {tableFields.map(field => {
-                return <th key={field.dataKey} data-key={field.dataKey} onClick={handleThClick}>{field.displayName}</th>
+                return (
+                <th key={field.dataKey} data-key={field.dataKey} onClick={handleThClick}>
+                  {field.displayName}
+                  {field.dataKey !== 'split' && field.dataKey === sortBy ?
+                    (ascending ?
+                      <div className="asc-desc-arrow" data-key={field.dataKey}>&#9650;</div>
+                    :
+                      <p className="asc-desc-arrow" data-key={field.dataKey}>&#9660;</p>
+                    ) :
+                    false
+                  }
+                </th>
+                );
               })}
             </tr>
           </thead>
           <tbody>
-            {positions.map(pos => {
+            {displayPositions.map((pos, posInd) => {
               return (
-                <tr key={pos}>
+                <tr key={pos} className={posInd < 3 ? 'league-row' : 'position-row'}>
                   {tableFields.map((field, ind) => {
-                    for (let i = 0; i < LeagueAvg.length; i++) {
-                      if (LeagueAvg[i].league === props.league && LeagueAvg[i].split === pos) {
-                        return <td key={pos + field.dataKey} className={sortBy === field.dataKey ? 'selected-column' : ''}>{field.displayNum(LeagueAvg[i][field.dataKey])}</td>;
+                    for (let i = 0; i < LeagueAvgData.length; i++) {
+                      if (LeagueAvgData[i].league === props.league && LeagueAvgData[i].split === pos) {
+                        return <td key={pos + field.dataKey} className={sortBy === field.dataKey ? 'selected-column' : ''}>{field.displayNum(LeagueAvgData[i][field.dataKey])}</td>;
                       }
                     }
                     return false;
