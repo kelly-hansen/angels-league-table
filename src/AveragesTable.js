@@ -1,4 +1,4 @@
-import LeagueAvg from './LeagueAvg.json';
+import LeagueAvgData from './LeagueAvg.json';
 import { useState } from 'react';
 
 function AveragesTable(props) {
@@ -146,7 +146,9 @@ function AveragesTable(props) {
     setSortBy(dataKey);
     if (dataKey === 'split') {
       displayPositions = positions.slice();
+      return;
     }
+
   }
 
   return (
@@ -165,9 +167,9 @@ function AveragesTable(props) {
               return (
                 <tr key={pos}>
                   {tableFields.map((field, ind) => {
-                    for (let i = 0; i < LeagueAvg.length; i++) {
-                      if (LeagueAvg[i].league === props.league && LeagueAvg[i].split === pos) {
-                        return <td key={pos + field.dataKey} className={sortBy === field.dataKey ? 'selected-column' : ''}>{field.displayNum(LeagueAvg[i][field.dataKey])}</td>;
+                    for (let i = 0; i < LeagueAvgData.length; i++) {
+                      if (LeagueAvgData[i].league === props.league && LeagueAvgData[i].split === pos) {
+                        return <td key={pos + field.dataKey} className={sortBy === field.dataKey ? 'selected-column' : ''}>{field.displayNum(LeagueAvgData[i][field.dataKey])}</td>;
                       }
                     }
                     return false;
