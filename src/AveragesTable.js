@@ -190,7 +190,13 @@ function AveragesTable(props) {
           <thead>
             <tr>
               {tableFields.map(field => {
-                return <th key={field.dataKey} data-key={field.dataKey} onClick={handleThClick}>{field.displayName}</th>
+                return (
+                <th key={field.dataKey} data-key={field.dataKey} onClick={handleThClick}>
+                  {field.displayName}
+                    <div className="ascending" data-key={field.dataKey}>&#9650;</div>
+                    <div className="descending hidden" data-key={field.dataKey}>&#9660;</div>
+                </th>
+                );
               })}
             </tr>
           </thead>
