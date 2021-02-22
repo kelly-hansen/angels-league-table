@@ -3,6 +3,9 @@ import { useState } from 'react';
 
 function AveragesTable(props) {
   const [sortBy, setSortBy] = useState('split');
+  const [ascending, setAscending] = useState(false);
+  const positions = ['Overall', props.league === 'MLB' ? 'AL' : 'INT', props.league === 'MLB' ? 'NL' : 'PCL', 'C', '1B', '2B', '3B', 'SS', 'LF', 'CF', 'RF', 'DH'];
+  const [displayPositions, setDisplayPositions] = useState(positions);
 
   const tableFields = [
     {
@@ -137,14 +140,12 @@ function AveragesTable(props) {
     }
   ];
 
-  const positions = ['Overall', props.league === 'MLB' ? 'AL' : 'INT', props.league === 'MLB' ? 'NL' : 'PCL', 'C', '1B', '2B', '3B', 'SS', 'LF', 'CF', 'RF', 'DH'];
-
   function sortTable(dataKey) {
-    let displayPositions = positions.slice();
     if (dataKey === 'split') {
-      return displayPositions;
+      setDisplayPositions(positions);
+      return;
     }
-    let excludeLeagues = displayPositions.slice(3);
+    let excludeLeagues = positions.slice(3);
     excludeLeagues.sort((a, b) => {
       let valueA;
       let valueB;
@@ -159,14 +160,23 @@ function AveragesTable(props) {
       }
       return valueB - valueA;
     });
-    return displayPositions.slice(0, 3).concat(excludeLeagues);
+    let reverse = ascending;
+    if (dataKey === sortBy) {
+      reverse = !reverse;
+      setAscending(prevAscending => {
+        return !prevAscending;
+      });
+    }
+    if (reverse) {
+      excludeLeagues.reverse();
+    }
+    setDisplayPositions(positions.slice(0, 3).concat(excludeLeagues));
   }
 
   function handleThClick(e) {
     const dataKey = e.target.getAttribute('data-key');
-    setSortBy(dataKey);
     sortTable(dataKey);
-
+    setSortBy(dataKey);
   }
 
   return (
@@ -181,7 +191,7 @@ function AveragesTable(props) {
             </tr>
           </thead>
           <tbody>
-            {sortTable(sortBy).map((pos, posInd) => {
+            {displayPositions.map((pos, posInd) => {
               return (
                 <tr key={pos} className={posInd < 3 ? 'league-row' : 'position-row'}>
                   {tableFields.map((field, ind) => {
