@@ -139,8 +139,14 @@ function AveragesTable(props) {
 
   const positions = ['Overall', props.league === 'MLB' ? 'AL' : 'INT', props.league === 'MLB' ? 'NL' : 'PCL', 'C', '1B', '2B', '3B', 'SS', 'LF', 'CF', 'RF', 'DH'];
 
+  let displayPositions = positions.slice();
+
   function handleThClick(e) {
-    setSortBy(e.target.getAttribute('data-key'));
+    const dataKey = e.target.getAttribute('data-key');
+    setSortBy(dataKey);
+    if (dataKey === 'split') {
+      displayPositions = positions.slice();
+    }
   }
 
   return (
@@ -155,7 +161,7 @@ function AveragesTable(props) {
             </tr>
           </thead>
           <tbody>
-            {positions.map(pos => {
+            {displayPositions.map(pos => {
               return (
                 <tr key={pos}>
                   {tableFields.map((field, ind) => {
