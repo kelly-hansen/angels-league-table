@@ -2,4 +2,4 @@
 
 Created with React using create-react-app
 
-View live: https://angels-league-table.herokuapp.com/
+View live: https://angels-league-averages.herokuapp.com/
