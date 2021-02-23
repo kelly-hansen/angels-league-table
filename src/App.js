@@ -1,4 +1,3 @@
-import LeagueAvgData from './LeagueAvg.json';
 import AveragesTable from './AveragesTable';
 import { useState } from 'react';
 
@@ -19,6 +18,7 @@ function App() {
         <h3 onClick={handleChangeLeague} className={`league-title${league === 'AAA' ? ' selected' : ''}`}>AAA</h3>
       </nav>
       <AveragesTable league={league} />
+      <p className="text-tip">Click column headers to sort</p>
     </div>
   );
 }
